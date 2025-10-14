@@ -12,6 +12,8 @@ return [
     'detail'                         => 'Detail',
     'cancel'                         => 'Cancel',
     'clear'                          => 'Clear',
+    'manage'                         => 'Manage',
+    'utility'                        => 'Utility',
     'downloadFile'                   => 'Download file',
     'edit'                           => 'Edit',
     'emailVerificationSuccess'       => 'User email verified successfully',
