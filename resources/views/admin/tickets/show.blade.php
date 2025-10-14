@@ -19,6 +19,7 @@
     <div class="row">
         {{-- Left Column --}}
         <div class="col-md-8">
+            {{-- Description Card --}}
             <div class="card">
                 <div class="card-header"><h5 class="mb-0">{{ trans('cruds.ticket.fields.description') }}</h5></div>
                 <div class="card-body">
@@ -27,6 +28,29 @@
                     @else
                         <p class="text-muted font-italic">No description provided.</p>
                     @endif
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h5 class="mb-0">Ticket Histories</h5></div>
+                <div class="card-body">
+                    <div class="timeline">
+                        @forelse ($ticket->ticket_status_histories->sortBy('created_at') as $history)
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <h6 class="mb-1">Status: <span class="font-weight-bold">{{ App\Models\Ticket::STATUS_SELECT[$history->to_status] ?? '' }}</span></h6>
+                                    <p class="mb-0">
+                                        <small class="text-muted">
+                                            Updated by: {{ $history->updated_by->name ?? 'System' }} on {{ $history->created_at->format('d M Y, H:i') }}
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-muted font-italic">No histories.</p>
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>
@@ -152,13 +176,9 @@
                     url: form.attr('action'),
                     data: form.serialize(),
                     success: function(response) {
-                        // Update the badge text and class, then toggle visibility
-                        let newStatus = form.find('select option:selected').text();
-                        // You'll need to add more robust class switching based on the new status
-                        $('#status-display .badge').text(newStatus);
-                        $('#status-form').addClass('d-none');
-                        $('#status-display').removeClass('d-none');
-                        // You could add a success toastr notification here
+                        // For simplicity, we just reload the page to see the change in the timeline.
+                        // A more advanced implementation could dynamically add the new history item with JS.
+                        location.reload();
                     },
                     error: function(xhr) {
                         alert(xhr.responseJSON.message || 'An error occurred.');
