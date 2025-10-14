@@ -190,7 +190,7 @@ class TicketsController extends Controller
     {
         abort_if(Gate::denies('ticket_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $ticket->load('customer', 'subscription', 'ticket_category', 'assigned_tos');
+        $ticket->load('customer', 'subscription', 'ticket_category', 'assigned_tos', 'ticket_status_histories', 'ticket_status_histories.updated_by');
 
         $users = $this->userRepository->all()->pluck('name', 'id');
 
