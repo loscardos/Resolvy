@@ -4,9 +4,12 @@
     <div class="d-flex justify-content-between mb-4">
         <h3 class="mb-0">{{ trans('global.show') }} {{ trans('cruds.customer.title') }}</h3>
         <div>
+            @can('customer_edit')
             <a class="btn btn-info" href="{{ route('admin.customers.edit', $customer->id) }}">
                 {{ trans('global.edit') }}
             </a>
+            @endcan
+
             <a class="btn btn-primary" href="{{ route('admin.customers.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
@@ -73,7 +76,7 @@
                             </tr>
                             <tr>
                                 <th>Package Price</th>
-                                <td>${{ number_format($subscription->package->price ?? 0, 2) }}</td>
+                                <td>IDR {{ number_format($subscription->package->price ?? 0, 2) }}</td>
                             </tr>
                             <tr>
                                 <th>Subscription Status</th>

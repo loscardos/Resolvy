@@ -214,6 +214,10 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => 51,
                 'title' => 'ticket_update_status_close',
             ],
+            [
+                'id'    => 52,
+                'title' => 'ticket_edit_status',
+            ],
         ];
 
         Permission::insert($permissions);

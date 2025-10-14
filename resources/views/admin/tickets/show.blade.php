@@ -7,9 +7,11 @@
             <span class="text-muted">Ticket #{{ $ticket->ticket_no }}</span>
         </div>
         <div>
+            @can('ticket_edit')
             <a class="btn btn-info" href="{{ route('admin.tickets.edit', $ticket->id) }}">
                 {{ trans('global.edit') }}
             </a>
+            @endcan
             <a class="btn btn-primary" href="{{ route('admin.tickets.index') }}">
                 {{ trans('global.back_to_list') }}
             </a>
@@ -68,7 +70,10 @@
                             <td>
                                 <div id="status-display">
                                     <span class="badge badge-secondary">{{ App\Models\Ticket::STATUS_SELECT[$ticket->status] ?? '' }}</span>
-                                    <a href="#" id="edit-status" class="ml-2 text-info"><i class="fas fa-pencil-alt fa-xs"></i></a>
+                                    @can('ticket_edit_status')
+                                        <a href="#" id="edit-status" class="ml-2 text-info"><i
+                                                class="fas fa-pencil-alt fa-xs"></i></a>
+                                    @endcan
                                 </div>
                                 <form id="status-form" action="{{ route('admin.tickets.updateStatus', $ticket->id) }}" method="POST" class="d-none">
                                     @csrf
@@ -129,7 +134,10 @@
                                     <div id="assigned-badges">
                                         @include('partials.assignedUsersBadges', ['users' => $ticket->assigned_tos])
                                     </div>
-                                    <a href="#" id="edit-assign" class="ml-2 text-info"><i class="fas fa-pencil-alt fa-xs"></i></a>
+                                    @can('ticket_assign_pics')
+                                        <a href="#" id="edit-assign" class="ml-2 text-info"><i
+                                                class="fas fa-pencil-alt fa-xs"></i></a>
+                                    @endcan
                                 </div>
                                 <form id="assign-form" action="{{ route('admin.tickets.updateAssignments', $ticket->id) }}" method="POST" class="d-none">
                                     @csrf

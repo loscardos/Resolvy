@@ -217,7 +217,7 @@ class TicketsController extends Controller
 
     public function updateStatus(Request $request, Ticket $ticket)
     {
-        abort_if(Gate::denies('ticket_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('ticket_edit_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $request->validate(['status' => 'required|string|in:' . implode(',', array_keys(Ticket::STATUS_SELECT))]);
 
